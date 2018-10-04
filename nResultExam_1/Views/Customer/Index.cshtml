@@ -1,0 +1,104 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @*CSS*@
+
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.3.2/css/colReorder.dataTables.min.css">
+    @*JS for angularJS and Datatable*@
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-datatables.js"></script>
+    <script src="https://cdn.rawgit.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script src="~/Scripts/angular-datatables-columfiltering/angular-datatables.columnfilter.min.js"></script>
+    <script src="~/Scripts/angular-datatables-columfiltering/dataTables.columnFilter.js"></script>
+    <script src="https://cdn.datatables.net/colreorder/1.3.2/js/dataTables.colReorder.min.js"></script>
+    <script src="~/Scripts/angular-datatables-columnreorder/angular-datatables.colreorder.min.js"></script>
+    @*Js for our angular js module, controller*@
+    <script src="~/Scripts/customer.js"></script>
+    @*other unused links*@
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <div data-ng-app="customerjs" data-ng-controller="customerCtrl" class="container">
+        <div class="form-inline">
+            <input type="file" name="file" onchange="angular.element(this).scope().importFile(this.files)" class="form-control" required />
+            <input type="button" value="Import" class="btn btn-success" ng-disabled="!SelectedFileForUpload" ng-click="ParseExcelDataAndSave()" />
+            <br />
+            <span style="color:red">
+                {{Message}}
+            </span>
+        </div><br />
+        <div class="form-inline">
+            <div>
+                Gender: <input class="form-control" type="text" name="customer.gender" data-ng-model="customer.gender" /><br />
+                Title: <input class="form-control" type="text" name="customer.title" data-ng-model="customer.title" /><br />
+                Occupation: <input class="form-control" type="text" name="customer.occupation" data-ng-model="customer.occupation" /><br />
+                Company: <input class="form-control" type="text" name="customer.company" data-ng-model="customer.company" /><br />
+                Given Name: <input class="form-control" type="text" name="customer.givenName" data-ng-model="customer.givenName" /><br />
+                Middle Initial: <input class="form-control" type="text" name="customer.middleInitial" data-ng-model="customer.middleInitial" /><br />
+                Surname: <input class="form-control" type="text" name="customer.surname" data-ng-model="customer.surname" /><br />
+                Blood Type: <input class="form-control" type="text" name="customer.bloodType" data-ng-model="customer.bloodType" /><br />
+                Email Address: <input class="form-control" type="text" name="customer.emailAddress" data-ng-model="customer.emailAddress" /><br />
+                <input type="button" class="btn btn-success" value="Save" name="btnSave" ng-click="save(customer)" />
+            </div>
+        </div>
+        <br /><br />
+        <div>
+            <table id="entry-grid" datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="table table-hover">
+                @*<tfoot>
+                    <tr>
+                        <th>Gender</th>
+                        <th>Title</th>
+                        <th>Occupation</th>
+                        <th>Company</th>
+                        <th>Given Name</th>
+                        <th>Middle Initial</th>
+                        <th>Surname</th>
+                        <th>Blood Type</th>
+                        <th>Email Address</th>
+                    </tr>
+                </tfoot>*@
+            </table>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Rename your file</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" ng-model="filename"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" ng-click="saveFile(filename)">Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-inline">
+            <input type="button" value="Export to Excel" data-toggle="modal" data-target="#myModal" class="btn btn-danger" ng-click="exportData(customers)" />
+            <input type="button" value="Print" class="btn btn-success" ng-click="print()" />
+        </div>
+    </div>
+</body>
+</html>
